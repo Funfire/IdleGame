@@ -4,8 +4,8 @@
 [ext_resource path="res://Assets/Tiles/tile_0022.png" type="Texture" id=2]
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Assets/Characters/character_0003.png" type="Texture" id=4]
-[ext_resource path="res://Scenes/Main.gd" type="Script" id=5]
-[ext_resource path="res://Money.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scripts/Main.gd" type="Script" id=5]
+[ext_resource path="res://Scenes/Money.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Assets/Characters/character_0002.png" type="Texture" id=7]
 [ext_resource path="res://enemy.gd" type="Script" id=8]
 
@@ -93,6 +93,9 @@ points = PoolVector2Array( 0, 0, 18, 0, 18, 18, 0, 18 )
 } ]
 2/z_index = 0
 
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 43, 132 )
+
 [sub_resource type="SpriteFrames" id=9]
 animations = [ {
 "frames": [ ExtResource( 7 ), ExtResource( 4 ) ],
@@ -103,9 +106,6 @@ animations = [ {
 
 [sub_resource type="RectangleShape2D" id=10]
 extents = Vector2( 10, 13 )
-
-[sub_resource type="RectangleShape2D" id=8]
-extents = Vector2( 43, 132 )
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 5 )
@@ -119,23 +119,7 @@ tile_data = PoolIntArray( 393215, 2, 0, 327680, 2, 0, 327681, 2, 0, 327682, 2, 0
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 39, 246 )
-frame = 1
 playing = true
-
-[node name="enemy" type="Node2D" parent="."]
-position = Vector2( 561, 246 )
-scale = Vector2( 3, 3 )
-script = ExtResource( 8 )
-
-[node name="AnimatedSprite" type="AnimatedSprite" parent="enemy"]
-frames = SubResource( 9 )
-frame = 1
-playing = true
-
-[node name="Area2D" type="Area2D" parent="enemy"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="enemy/Area2D"]
-shape = SubResource( 10 )
 
 [node name="OutZone" type="Area2D" parent="."]
 position = Vector2( -32, 227 )
@@ -153,6 +137,20 @@ margin_bottom = 32.0
 one_shot = true
 autostart = true
 
-[connection signal="area_entered" from="enemy/Area2D" to="enemy" method="_on_Area2D_area_entered"]
+[node name="enemy" type="Node2D" parent="."]
+position = Vector2( 561, 246 )
+scale = Vector2( 3, 3 )
+script = ExtResource( 8 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="enemy"]
+frames = SubResource( 9 )
+playing = true
+
+[node name="Area2D" type="Area2D" parent="enemy"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="enemy/Area2D"]
+shape = SubResource( 10 )
+
 [connection signal="area_entered" from="OutZone" to="enemy" method="_on_Area2D_area_entered"]
 [connection signal="timeout" from="Money/Timer" to="." method="_on_Timer_timeout"]
+[connection signal="area_entered" from="enemy/Area2D" to="enemy" method="_on_Area2D_area_entered"]

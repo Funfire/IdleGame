@@ -1,6 +1,7 @@
 extends Node2D
 
-onready var enemy = load("res://enemy.tscn")
+
+onready var enemy = load("res://Scenes/enemy.tscn")
 var nums = [140, 246]
 
 func _physics_process(delta):
