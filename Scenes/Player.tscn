@@ -1,0 +1,36 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Assets/Characters/character_0000.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Characters/character_0001.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/Player.gd" type="Script" id=3]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 24, 24 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 24, 24 )
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 5.5, 3.33333 )
+
+[node name="Player" type="AnimatedSprite"]
+scale = Vector2( 3, 3 )
+frames = SubResource( 3 )
+flip_h = true
+script = ExtResource( 3 )
+
+[node name="SliceZone" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SliceZone"]
+position = Vector2( 15.5, 0 )
+shape = SubResource( 4 )
